@@ -1,0 +1,46 @@
+#include <xinu.h>
+
+syscall pipread(
+		pipid32		pip,
+		char*		buf,
+		uint32		len
+	)  
+{
+	struct pipent *pipptr;
+	intmask mask;
+
+	mask = disable();
+
+	if(isbadpipid(pip)){
+		restore(mask);
+		return (pipid32) (SYSERR);
+	}
+	
+	pipptr = &piptab[pip];
+
+	if(pipptr->pipstate != PIPE_CONNECTED ){
+		restore(mask);
+		return (pipid32) (SYSERR);
+	}
+
+	if(pipptr->pipReader != getpid()){
+		restore(mask);
+		return (pipid32) (SYSERR);
+	}
+
+	if((pipptr->pipOwner == PR_FREE) || (pipptr->pipReader == PR_FREE) ||(piptr->pipWriter == PR_FREE) ){
+		restore(mask);
+		return (pipid32) (SYSERR);
+	}
+
+	int length;
+	
+	for(length = 0; length < len; length++){
+		wait(pipptr->emptySem);
+		buf[length] = pipptr->buf[pipptr->head];
+		pipptr->head = (pipptr->head + 1) % 256;
+		signal(pipptr->fullSem);
+	}
+	restore(mask);
+	return length;
+} 

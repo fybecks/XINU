@@ -1,0 +1,15 @@
+Hello World!
+Proc Name	 Proc Prio	 Proc State	 Proc Stk Ptr
+    prnull	 0	 2	 80016e48
+ Proc Name	 Proc Prio	 Proc State	 Proc Stk Ptr
+Main process	 20	 1	 80016e80
+Before creating 2 processes.
+Proc Name	 Proc Prio	 Proc State	 Proc Stk Ptr
+    prnull	 0	 2	 80016e48
+ Proc Name	 Proc Prio	 Proc State	 Proc Stk Ptr
+Main process	 20	 1	 80016e80
+ Proc Name	 Proc Prio	 Proc State	 Proc Stk Ptr
+ process 1	 20	 4	 80016eb8
+ Proc Name	 Proc Prio	 Proc State	 Proc Stk Ptr
+ process 2	 20	 4	 80016ef0
+
